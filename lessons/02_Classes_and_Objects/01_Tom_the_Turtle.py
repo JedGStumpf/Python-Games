@@ -69,6 +69,31 @@ for _ in range(4):
     turtle.forward(100)  # Move forward by 100 pixels
     turtle.left(90)  # Turn left by 90 degrees
 
+
+
+class NewTurtle(Turtle):
+    def __init__(self, screen, x: int, y: int, color: str):
+        super().__init__(screen, x, y)
+        self.color = color
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Display the drawing
 pygame.display.flip()
 
