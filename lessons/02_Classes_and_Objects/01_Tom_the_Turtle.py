@@ -17,6 +17,13 @@ def event_loop():
             if event.type == pygame.QUIT:
                 return
 
+
+# Colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+
+
 class Turtle:
     def __init__(self, screen, x: int, y: int):
         self.x = x
@@ -24,7 +31,7 @@ class Turtle:
         self.screen = screen
         self.angle = 0  # Angle in degrees, starting facing right
 
-    def forward(self, distance):
+    def forward(self, distance, color):
         # Calculate new position based on current angle
         radian_angle = math.radians(self.angle)
 
@@ -40,11 +47,41 @@ class Turtle:
         self.y -= dy
 
         # Draw line to the new position
-        pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
+        pygame.draw.line(self.screen, color, (start_x, start_y), (self.x, self.y), 2)
 
-    def left(self, angle):
+    def turn(self, angle: int, right_turn: bool = False):
+        """
+        Turns the turtle left by default.
+        Set right_turn to True to turn Right
+        """
         # Turn left by adjusting the angle counterclockwise
-        self.angle = (self.angle + angle) % 360
+
+        
+        if right_turn and self.angle > 0:
+            self.angle = ((self.angle + angle) % 360)*-1
+        else:
+            self.angle = (self.angle + angle) % 360
+
+
+
+class NewTurtle(Turtle):
+    def __init__(self, screen, x: int, y: int, color: tuple = black):
+        super().__init__(screen, x, y)
+        self.color = color
+
+    def forward(self, distance: int, color: tuple):
+        return super().forward(distance, self.color)
+    
+    def penup(self, no_draw: bool = False):
+        if no_draw:
+            self.color = white
+
+
+
+
+
+
+    
 
 
 # Main loop
@@ -57,24 +94,29 @@ width, height = 500, 500
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Turtle Style Drawing")
 
-# Colors
-white = (255, 255, 255)
-black = (0, 0, 0)
+
 
 screen.fill(white)
-turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
+turtle = NewTurtle(screen, screen.get_width() // 2, screen.get_height() // 2, red)  # Start at the center of the screen
 
 # Draw a square using turtle-style commands
-for _ in range(4):
-    turtle.forward(100)  # Move forward by 100 pixels
-    turtle.left(90)  # Turn left by 90 degrees
+for x in range(9):
+
+    turtle.forward(100, turtle.color)  # Move forward by 100 pixels
+    if x % 3 == 0:
+        turtle.turn(90, True)    # Turn left by 90 degrees
+        turtle.penup(True)
+        print("Hi")
+    else:
+        turtle.turn(90)
+        turtle.penup(False)
+    print(turtle.color)
 
 
 
-class NewTurtle(Turtle):
-    def __init__(self, screen, x: int, y: int, color: str):
-        super().__init__(screen, x, y)
-        self.color = color
+
+    
+
 
     
 
