@@ -8,7 +8,7 @@ allows for more complex games with multiple objects.
 
 """
 import pygame
-
+from dataclasses import dataclass
 
 class Colors:
     """Constants for Colors"""
@@ -17,6 +17,7 @@ class Colors:
     RED = (255, 0, 0)
 
 
+@dataclass
 class GameSettings:
     """Settings for the game"""
     width: int = 500

@@ -75,13 +75,12 @@ class NewTurtle(Turtle):
     def penup(self, no_draw: bool = False):
         if no_draw:
             self.color = white
-
-
-
-
-
-
+        else:
+            self.color = red
     
+    def get_x_and_y(self):
+        print(f'X: {self.x}   Y: {self.y}')
+
 
 
 # Main loop
@@ -98,19 +97,19 @@ pygame.display.set_caption("Turtle Style Drawing")
 
 screen.fill(white)
 turtle = NewTurtle(screen, screen.get_width() // 2, screen.get_height() // 2, red)  # Start at the center of the screen
-
+print(turtle.color)
 # Draw a square using turtle-style commands
 for x in range(9):
 
-    turtle.forward(100, turtle.color)  # Move forward by 100 pixels
+    turtle.forward(100, red)  # Move forward by 100 pixels
     if x % 3 == 0:
         turtle.turn(90, True)    # Turn left by 90 degrees
         turtle.penup(True)
-        print("Hi")
     else:
         turtle.turn(90)
         turtle.penup(False)
-    print(turtle.color)
+    turtle.get_x_and_y()
+    # print(turtle.color)
 
 
 
