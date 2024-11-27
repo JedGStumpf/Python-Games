@@ -15,6 +15,8 @@ class Colors:
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
+    BLUE = (0, 0, 255)
+    GREEN = (0, 255, 0)
 
 
 @dataclass
@@ -73,11 +75,20 @@ class Game:
 
 
 class Player:
-    """Player class, just a bouncing rectangle"""
+    """
+    Args:
+    game = Game Object
+    color = tuple of RBB values
+    x = int, starting x position
+    y = int, starting y position or None
+    v_x = float of x velocity (enter a value between 0.1 and 99.9)
+    v_y = float of y velocity (enter a value between 0.1 and 99.9)
+    """
 
-    def __init__(self, game: Game):
+    def __init__(self, game: Game, color: tuple, x: int, y: int, v_x: float, v_y: float = 0.0):
         self.game = game
         settings = game.settings
+        self.color = color
 
         self.width = settings.player_width
         self.height = settings.player_height
@@ -85,11 +96,11 @@ class Player:
         self.is_jumping = False
         self.v_jump = settings.player_jump_velocity
 
-        self.y = settings.player_start_y if settings.player_start_y is not None else settings.height - self.height
-        self.x = settings.player_start_x
+        self.x = x
+        self.y = y if y is not None else settings.height - self.height
         
-        self.v_x = settings.player_v_x  # X Velocity
-        self.v_y = settings.player_v_y  # Y Velocity
+        self.v_x = v_x  #settings.player_v_x  # X Velocity
+        self.v_y = v_y  #settings.player_v_y  # Y Velocity
 
     def update(self):
         """Update player position, continuously jumping"""
@@ -126,14 +137,20 @@ class Player:
             self.is_jumping = True
 
     def draw(self, screen):
-        pygame.draw.rect(screen, Colors.BLACK, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
 
 
 settings = GameSettings()
 game = Game(settings)
 
-p1 = Player(game)
+p1 = Player(game, Colors.BLUE, 100, None, 11.0, 0.0)
 game.add_player(p1)
+
+p2 = Player(game, Colors.RED, 200, None, 0.3, 70.0)
+game.add_player(p2)
+
+print(p1.x)
+print(p2.x)
 
 
 game.run()
