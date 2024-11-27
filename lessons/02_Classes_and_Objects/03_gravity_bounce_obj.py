@@ -143,10 +143,10 @@ class Player:
 settings = GameSettings()
 game = Game(settings)
 
-p1 = Player(game, Colors.BLUE, 100, None, 11.0, 0.0)
+p1 = Player(game, Colors.BLUE, 100, None, 4.0, 0.0)
 game.add_player(p1)
 
-p2 = Player(game, Colors.RED, 200, None, 0.3, 70.0)
+p2 = Player(game, Colors.RED, 200, None, 6.0, 70.0)
 game.add_player(p2)
 
 print(p1.x)
